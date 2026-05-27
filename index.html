@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>HBD NATASYAA <3</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body{
+    background: radial-gradient(circle at top,#ffe5ec 0%,#ffffff 45%);
+    font-family:'Press Start 2P',cursive;
+    overflow-x: hidden;
+    overflow-y: hidden; /* Dikunci sebelum amplop dibuka */
+    width: 100%;
+}
+
+/* floating hearts background */
+.floating-hearts{
+    position:fixed; 
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index: 1;
+}
+
+.float-heart{
+    position:absolute;
+    color:#ff8fab;
+    opacity:.5;
+    animation: floatUp linear infinite;
+}
+
+@keyframes floatUp{
+    from{
+        transform: translateY(110vh) rotate(0deg);
+        opacity:0;
+    }
+    20%{
+        opacity:.6;
+    }
+    to{
+        transform: translateY(-20vh) rotate(360deg);
+        opacity:0;
+    }
+}
+
+/* --- PAGE 1 CONTAINER --- */
+.page-one {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.container{
+    text-align:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:32px;
+    position:relative;
+    z-index:2;
+    width: 100%;
+    max-width: 450px;
+    padding: 0 20px;
+}
+
+.text-top{
+    font-size:22px;
+    color:#222;
+    text-transform:lowercase;
+    letter-spacing:-1px;
+    animation: floatText 6s ease-in-out infinite;
+}
+
+.text-bottom{
+    font-size:14px;
+    color:#444;
+    text-transform:lowercase;
+    line-height:1.5;
+    transition:opacity .4s;
+    animation: floatTextSlow 8s ease-in-out infinite;
+}
+
+.hint{
+    font-size:9px;
+    color:#999;
+    transition:opacity .4s;
+    animation: floatHint 7s ease-in-out infinite;
+}
+
+.footer-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+}
+
+.hint.hidden,
+.text-bottom.hidden{
+    opacity:0;
+    pointer-events:none;
+}
+
+.scroll-indicator {
+    font-size: 10px;
+    color: #c9184a;
+    margin-top: 15px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+    animation: bounceArrow 1.5s infinite;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.scroll-indicator.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+@keyframes bounceArrow {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+}
+
+@keyframes floatText{
+    0%{ transform: translateY(0px) translateX(0px); }
+    25%{ transform: translateY(-6px) translateX(6px); }
+    50%{ transform: translateY(-12px) translateX(0px); }
+    75%{ transform: translateY(-6px) translateX(-6px); }
+    100%{ transform: translateY(0px) translateX(0px); }
+}
+
+@keyframes floatTextSlow{
+    0%{ transform: translateY(0px) translateX(0px); }
+    25%{ transform: translateY(-3px) translateX(3px); }
+    50%{ transform: translateY(-6px) translateX(0px); }
+    75%{ transform: translateY(-3px) translateX(-3px); }
+    100%{ transform: translateY(0px) translateX(0px); }
+}
+
+@keyframes floatHint{
+    0%{ transform: translateY(0px) translateX(0px); opacity:.6; }
+    25%{ transform: translateY(-2px) translateX(2px); opacity:.8; }
+    50%{ transform: translateY(-4px) translateX(0px); opacity:1; }
+    75%{ transform: translateY(-2px) translateX(-2px); opacity:.8; }
+    100%{ transform: translateY(0px) translateX(0px); opacity:.6; }
+}
+
+/* ENVELOPE SCENE */
+.envelope-scene{
+    position:relative;
+    width:330px;   
+    height:225px;  
+    cursor:pointer;
+    filter: drop-shadow(0 12px 22px rgba(255,105,135,.25));
+    transition:transform .3s;
+}
+
+.envelope-scene:hover{
+    transform:translateY(-4px);
+}
+
+.envelope-scene:not(.opened):hover{
+    animation: wiggle .3s infinite ease-in-out;
+}
+
+@keyframes wiggle{
+    0%,100%{ transform:rotate(-2deg); }
+    50%{ transform:rotate(2deg); }
+}
+
+/* LETTER */
+.letter{
+    position:absolute;
+    bottom:15px;
+    left:50%;
+    transform: translateX(-50%) translateY(0);
+    width:300px;  
+    height:200px; 
+    background: repeating-linear-gradient(
+        to bottom,
+        #fffaf0 0px,
+        #fffaf0 30px,
+        #ff8fab 300px
+    );
+    background-color:#fffaf0;
+    border:2.5px solid #000;
+    border-radius:8px;
+    z-index:2;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    gap:10px;
+    font-size:11px; 
+    line-height:1.8;
+    padding:20px;
+    color:#c9184a;
+    text-align:center;
+    text-transform:lowercase;
+    opacity:0;
+    box-shadow: 0 10px 24px rgba(0,0,0,.08);
+    transition: transform .9s .3s cubic-bezier(.175,.885,.32,1.275), opacity .5s .3s ease;
+}
+
+.letter::after{
+    content:"✨";
+    position:absolute;
+    top:12px;
+    right:14px;
+    font-size:12px;
+    animation: twinkle 1s infinite;
+}
+
+@keyframes twinkle{
+    0%,100%{ opacity:.3; }
+    50%{ opacity:1; }
+}
+
+.big-heart{
+    font-size:26px;
+    animation: heartBeat 1.4s infinite;
+}
+
+@keyframes heartBeat{
+    0%,100%{ transform:scale(1); }
+    50%{ transform:scale(1.12); }
+}
+
+.envelope-scene.opened .letter{
+    transform:translateX(-50%) translateY(-50px);
+    opacity:1;
+    z-index:10;
+}
+
+/* svg */
+.env-svg{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    overflow:visible;
+}
+
+.bg-envelope{ z-index:1; }
+.fg-envelope{ z-index:3; pointer-events:none; }
+
+/* flap */
+.flap-group{
+    position:absolute;
+    top:0;
+    left:0;
+    width:330px;  
+    height:225px; 
+    z-index:4;
+    transform-origin:50% 30px; 
+    transition: transform .6s cubic-bezier(.4,0,.2,1);
+}
+
+.envelope-scene.opened .flap-group{
+    transform:rotateX(180deg);
+    z-index:1;
+}
+
+/* sparkles */
+.sparkle{
+    position:absolute;
+    font-size:14px;
+    animation: spark .8s forwards ease-out;
+    pointer-events:none;
+}
+
+@keyframes spark{
+    from{ opacity:1; transform: translateY(0) scale(1); }
+    to{ opacity:0; transform: translateY(-40px) scale(1.8); }
+}
+
+/* --- PAGE 2: FOTO GALLERY --- */
+.page-two {
+    min-height: 100vh;
+    width: 100%;
+    padding: 80px 20px 40px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+}
+
+.gallery-title {
+    font-size: 16px;
+    color: #c9184a;
+    margin-bottom: 40px;
+    text-transform: lowercase;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 40px;
+}
+
+.photo-frame {
+    background-color: #fff;
+    border: 3px solid #000;
+    padding: 10px 10px 20px 10px;
+    box-shadow: 6px 6px 0px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.photo-frame:nth-child(even) { transform: rotate(2deg); }
+.photo-frame:nth-child(odd) { transform: rotate(-2deg); }
+
+.photo-frame:hover {
+    transform: scale(1.05) rotate(0deg);
+    z-index: 5;
+}
+
+.photo-frame img {
+    width: 100%;
+    aspect-ratio: 1 / 1; 
+    object-fit: cover;
+    border: 2px solid #000;
+    display: block;
+}
+
+.photo-caption {
+    font-size: 8px;
+    color: #444;
+    text-align: center;
+    margin-top: 12px;
+    text-transform: lowercase;
+}
+
+/* --- PAGE 3: PENUTUP (KATA-KATA) --- */
+.page-three {
+    min-height: 100vh;
+    width: 100%;
+    padding: 80px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%, #ffccd5 100%);
+}
+
+.closing-card {
+    background-color: #fffaf0;
+    border: 4px solid #000;
+    padding: 40px 30px;
+    max-width: 550px;
+    width: 100%;
+    box-shadow: 8px 8px 0px #000;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.closing-text {
+    font-size: 11px;
+    color: #222;
+    line-height: 2;
+    text-transform: lowercase;
+    margin-bottom: 30px;
+}
+
+.closing-heart {
+    display: inline-block;
+    width: 44px;
+    height: 44px;
+    image-rendering: pixelated;
+    animation: heartBeat 1.2s infinite;
+}
+
+/* mobile styling */
+@media(max-width:600px){
+    .text-top{ font-size:16px; }
+    .text-bottom{ font-size:11px; }
+    .envelope-scene{ width:220px; height:150px; } 
+    .flap-group{ width:220px; height:150px; transform-origin: 50% 20px; }
+    .letter{ width:200px; height:130px; font-size:8px; }
+    .envelope-scene.opened .letter{ transform: translateX(-50%) translateY(-30px); }
+    
+    .gallery-grid {
+        grid-template-columns: 1fr; 
+        max-width: 280px;
+    }
+    .gallery-title { font-size: 12px; }
+
+    .closing-card {
+        padding: 25px 15px;
+        max-width: 290px;
+    }
+    .closing-text {
+        font-size: 8px;
+        line-height: 1.8;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="floating-hearts" id="floatingHearts"></div>
+
+<div class="confetti-container" id="confettiBox" style="position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;overflow:hidden;z-index:999;"></div>
+
+<audio id="backsound" src="musik.mp3" loop></audio>
+
+<section class="page-one">
+    <div class="container">
+        <h1 class="text-top">hi Natasyaa!</h1>
+
+        <div class="envelope-scene" id="envelope" onclick="openEnvelope()">
+            <div class="letter">
+                <span class="big-heart"></span>
+                Happy birthday<br>
+                Natasyaa.<br>
+                "On this special day, I just want to say you're the best gift life has ever given me.
+                Happy birthday, may all your dreams come true.
+            </div>
+
+            <svg class="env-svg bg-envelope" viewBox="0 0 330 225">
+                <rect x="15" y="30" width="300" height="180" fill="#EADBC8" stroke="#000000" stroke-width="4"/>
+            </svg>
+
+            <div class="flap-group">
+                <svg viewBox="0 0 330 225" style="width:100%;height:100%;overflow:visible;image-rendering:pixelated;">
+                    <polygon points="15,30 165,127.5 315,30" fill="#FFFDF0" stroke="#000000" stroke-width="4"/>
+                    
+                    <g transform="translate(152, 115)">
+                        <path d="M2 0 H10 V2 H12 V0 H20 V2 H22 V8 H20 V10 H18 V12 H16 V14 H14 V16 H12 V18 H10 V16 H8 V14 H6 V12 H4 V10 H2 V8 H0 V2 H2 Z" fill="#a4133c" transform="translate(1,1) scale(1.1)"/>
+                        <path d="M2 0 H10 V2 H12 V0 H20 V2 H22 V8 H20 V10 H18 V12 H16 V14 H14 V16 H12 V18 H10 V16 H8 V14 H6 V12 H4 V10 H2 V8 H0 V2 H2 Z" fill="#ff4d6d"/>
+                        <rect x="3" y="2" width="3" height="3" fill="#ff8fab"/>
+                        <rect x="13" y="2" width="2" height="2" fill="#ff8fab"/>
+                        <path d="M2 0 H10 V2 H12 V0 H20 V2 H22 V8 H20 V10 H18 V12 H16 V14 H14 V16 H12 V18 H10 V16 H8 V14 H6 V12 H4 V10 H2 V8 H0 V2 H2 Z" fill="none" stroke="#000" stroke-width="0.8"/>
+                    </g>
+                </svg>
+            </div>
+
+            <svg class="env-svg fg-envelope" viewBox="0 0 330 225" style="image-rendering:pixelated;">
+                <polygon points="15,30 165,127.5 15,210" fill="#FFFDF0" stroke="#00" stroke-width="4"/>
+                <polygon points="315,30 165,127.5 315,210" fill="#FFFDF0" stroke="#00" stroke-width="4"/>
+                <polygon points="15,210 165,127.5 315,210" fill="#FFFDF0" stroke="#00" stroke-width="4"/>
+            </svg>
+        </div>
+
+        <div class="footer-area">
+            <p class="hint" id="hint">[ click the envelope ]</p>
+            <p class="text-bottom" id="textBottom">got a mail for you <3</p>
+            
+            <a href="#pageTwo" class="scroll-indicator" id="scrollArrow">scroll down v</a>
+        </div>
+    </div>
+</section>
+
+<section class="page-two" id="pageTwo">
+    <h2 class="gallery-title">some of my favorite moments ✨</h2>
+    
+    <div class="gallery-grid">
+        <div class="photo-frame">
+            <img src="2.jpeg" alt="Natasyaa 1">
+            <p class="photo-caption">cute as always ugh 🤍</p>
+        </div>
+        
+        <div class="photo-frame">
+            <img src="1.jpeg" alt="Natasyaa 2">
+            <p class="photo-caption">baddest alive! 🔥</p>
+        </div>
+
+        <div class="photo-frame">
+            <img src="3.jpeg" alt="Natasyaa 3">
+            <p class="photo-caption">wkwk gemes amat 🌸</p>
+        </div>
+
+        <div class="photo-frame">
+            <img src="4.jpeg" alt="Natasyaa 4">
+            <p class="photo-caption">my favorite view 🥰</p>
+        </div>
+    </div>
+
+    <a href="#pageThree" class="scroll-indicator show" style="margin-top: 20px;">keep scrolling v</a>
+</section>
+
+<section class="page-three" id="pageThree">
+    <div class="closing-card">
+        <p class="closing-text">
+            makasih ya udah selalu ada dan jadi bagian paling berharga di hidup aku. <br><br>
+            semoga di umur yang baru ini kamu selalu dikelilingi kebahagiaan, dilancarkan segala urusannya, dan tetep jadi natasyaa yang aku kenal. <br><br>
+            i'm so lucky to have you. <br>
+            once again, happy birthday sayang! 💖
+        </p>
+
+        <svg class="closing-heart" viewBox="0 0 22 18">
+            <path d="M2 0 H10 V2 H12 V0 H20 V2 H22 V8 H20 V10 H18 V12 H16 V14 H14 V16 H12 V18 H10 V16 H8 V14 H6 V12 H4 V10 H2 V8 H0 V2 H2 Z" fill="#ff4d6d"/>
+            <rect x="3" y="2" width="3" height="3" fill="#ff8fab"/>
+            <path d="M2 0 H10 V2 H12 V0 H20 V2 H22 V8 H20 V10 H18 V12 H16 V14 H14 V16 H12 V18 H10 V16 H8 V14 H6 V12 H4 V10 H2 V8 H0 V2 H2 Z" fill="none" stroke="#000" stroke-width="1"/>
+        </svg>
+    </div>
+</section>
+
+<script>
+const CONFETTI_COLORS = ['#ff4d6d','#ff8fab','#ffd6e0','#ffb3c6','#c9184a','#ffccd5'];
+let opened = false;
+
+function createFloatingHearts(){
+    const box = document.getElementById('floatingHearts');
+    for(let i=0;i<18;i++){
+        const h = document.createElement('div');
+        h.className = 'float-heart';
+        h.innerHTML = Math.random()>.5 ? '♥' : '♡';
+        h.style.left = Math.random()*100 + 'vw';
+        h.style.animationDuration = (Math.random()*10+10)+'s';
+        h.style.fontSize = (Math.random()*12+12)+'px';
+        h.style.animationDelay = Math.random()*10+'s';
+        box.appendChild(h);
+    }
+}
+createFloatingHearts();
+
+function spawnConfetti(count=50){
+    const box = document.getElementById('confettiBox');
+    for(let i=0;i<count;i++){
+        setTimeout(()=>{
+            const dot = document.createElement('div');
+            const size = Math.random()*8+4;
+            const dur = (Math.random()*1.5+1).toFixed(2);
+            dot.style.cssText = `
+                position:absolute; left:${Math.random()*100}%; top:-20px;
+                width:${size}px; height:${size}px;
+                background:${CONFETTI_COLORS[Math.floor(Math.random()*CONFETTI_COLORS.length)]};
+                border-radius:${Math.random()>.5?'50%':'2px'};
+                transform:rotate(${Math.random()*360}deg); opacity:1;
+                transition: transform ${dur}s linear, opacity ${dur}s;
+            `;
+            box.appendChild(dot);
+            requestAnimationFrame(()=>{
+                dot.style.transform = `translateY(105vh) rotate(${Math.random()*720}deg)`;
+                dot.style.opacity='0';
+            });
+            setTimeout(()=>{ dot.remove(); }, dur*1000);
+        }, i*20);
+    }
+}
+
+function createSparkles(){
+    for(let i=0;i<12;i++){
+        const s = document.createElement('div');
+        s.className='sparkle'; s.innerHTML='✨';
+        s.style.left = (window.innerWidth/2 + (Math.random()*120-60)) + 'px';
+        s.style.top = (window.innerHeight/2 + (Math.random()*80-40)) + 'px';
+        document.body.appendChild(s);
+        setTimeout(()=>{ s.remove(); },800);
+    }
+}
+
+function openEnvelope(){
+    if(opened) return;
+    opened = true;
+
+    const music = document.getElementById('backsound');
+    music.play().catch(error => {
+        console.log("Autoplay diblokir browser, tapi aman dipicu klik: ", error);
+    });
+
+    // PENTING: Buka kunci scroll di body dulu
+    document.body.style.overflowY = 'auto';
+
+    document.getElementById('envelope').classList.add('opened');
+    document.getElementById('hint').classList.add('hidden');
+    document.getElementById('textBottom').classList.add('hidden');
+
+    document.getElementById('scrollArrow').classList.add('show');
+
+    setTimeout(()=>{
+        spawnConfetti(50);
+        createSparkles();
+    },400);
+
+    setTimeout(()=>{
+        spawnConfetti(30);
+    },1200);
+}
+
+// --- JALUR KHUSUS SCROLL ANTI MACET ---
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+
+    anchor.addEventListener('click', function(e){
+
+        e.preventDefault();
+
+        const targetId = this.getAttribute('href');
+        const target = document.querySelector(targetId);
+
+        if(target){
+
+            const targetPosition =
+                target.getBoundingClientRect().top + window.pageYOffset;
+
+            smoothScrollTo(targetPosition, 1400);
+        }
+    });
+
+});
+
+function smoothScrollTo(target, duration){
+
+    const start = window.pageYOffset;
+    const distance = target - start;
+    const startTime = performance.now();
+
+    function animation(currentTime){
+
+        const timeElapsed = currentTime - startTime;
+
+        const progress = Math.min(timeElapsed / duration, 1);
+
+        // easing super smooth
+        const ease =
+            progress < 0.5
+            ? 4 * progress * progress * progress
+            : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+        window.scrollTo(0, start + distance * ease);
+
+        if(timeElapsed < duration){
+            requestAnimationFrame(animation);
+        }
+    }
+
+    requestAnimationFrame(animation);
+}
+</script>
+
+</body>
+</html>
